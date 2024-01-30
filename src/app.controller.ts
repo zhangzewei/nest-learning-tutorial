@@ -6,8 +6,18 @@ import {
   Body,
   Put,
   Delete,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+
+class CustomForbiddenException extends HttpException {
+  constructor(description) {
+    super('custom forbidden', HttpStatus.FORBIDDEN, {
+      description,
+    });
+  }
+}
 
 @Controller('app')
 export class AppController {
@@ -15,6 +25,7 @@ export class AppController {
 
   @Get('hello/:name')
   getHello(@Param('name') a: string): string {
+    throw new CustomForbiddenException('custom description');
     return `Say hello to ${a}`;
   }
 
