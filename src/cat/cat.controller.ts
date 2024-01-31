@@ -1,5 +1,7 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Body, Post, Param, Put } from '@nestjs/common';
 import { CatService } from './cat.service';
+import { CreateCatDto, UpdateCatDto } from './dto/cat.dto';
+
 @Controller('cat')
 export class CatController {
   constructor(private catService: CatService) {}
@@ -12,5 +14,15 @@ export class CatController {
   changeCats() {
     this.catService.setIsChanged();
     return 'cat controller changed, flag: ' + this.catService.getIsChanged();
+  }
+
+  @Post()
+  createCat(@Body() body: CreateCatDto) {
+    return body;
+  }
+
+  @Put(':id')
+  updateCat(@Param('id') id: string, @Body() body: UpdateCatDto) {
+    return { id, body };
   }
 }
