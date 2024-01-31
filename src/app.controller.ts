@@ -10,6 +10,7 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { AppService } from './app.service';
+import { CatService } from './cat/cat.service';
 
 class CustomForbiddenException extends HttpException {
   constructor(description) {
@@ -21,12 +22,11 @@ class CustomForbiddenException extends HttpException {
 
 @Controller('app')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private readonly catService: CatService) {}
 
   @Get('hello/:name')
-  getHello(@Param('name') a: string): string {
-    throw new CustomForbiddenException('custom description');
-    return `Say hello to ${a}`;
+  getHello(@Param('name') a: string) {
+    return 'app controller flag: ' + this.catService.getIsChanged();
   }
 
   @Post('create')
