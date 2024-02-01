@@ -22,7 +22,7 @@ export class CatController {
   }
 
   @Put(':id')
-  updateCat(@Param('id') id: string, @Body() body: UpdateCatDto) {
-    return { id, body };
+  updateCat(@Param('id') id: number, @Body() body: UpdateCatDto) {
+    return { id: id + 1, body, typeOfID: typeof id };
   }
 }
