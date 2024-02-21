@@ -8,9 +8,12 @@ import {
   Delete,
   HttpException,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { AppService } from './app.service';
 import { CatService } from './cat/cat.service';
+import { RolesGuard } from './guard/role.guard';
+import { Roles } from './guard/role.decorator';
 
 class CustomForbiddenException extends HttpException {
   constructor(description) {
@@ -30,6 +33,8 @@ export class AppController {
   }
 
   @Post('create')
+  @Roles(['admin'])
+  @UseGuards(RolesGuard)
   createHello(@Body() body: { name: string; age: string }) {
     return `Create hello to ${body.name}, age is ${body.age}`;
   }
