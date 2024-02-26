@@ -1,4 +1,4 @@
-import { IsString, IsNumber } from 'class-validator';
+import { IsString, IsNumber, IsArray } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateCatDto {
@@ -6,6 +6,8 @@ export class CreateCatDto {
   name: string;
   @IsNumber()
   age: number;
+  @IsArray()
+  foods: string[]
 }
 
-export class UpdateCatDto extends PartialType(CreateCatDto) {}
+export class UpdateCatDto extends PartialType(CreateCatDto) { }
